@@ -1,9 +1,18 @@
 local toggle_checkbox = require("obsidian.api").toggle_checkbox
+local log = require("obsidian.log")
 
 ---@param data CommandArgs
 return function(_, data)
   local start_line, end_line
-  local checkboxes = Obsidian.opts.checkbox.order
+  local checkboxes
+  if data.args == "" then
+    checkboxes = Obsidian.opts.checkbox.order
+  else
+    checkboxes = { data.args }
+  end
+
+  log.log("checkboxes: " .. vim.inspect(checkboxes))
+
   start_line = data.line1
   end_line = data.line2
 

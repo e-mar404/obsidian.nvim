@@ -129,6 +129,7 @@ M.toggle_checkbox = function(states, line_num)
         break
       end
     end
+    line = string.gsub(line, "%[.%]", "[" .. checkboxes[1] .. "]", 1)
   elseif Obsidian.opts.checkbox.create_new then
     local unordered_list_pattern = "^(%s*)[-*+] (.*)"
     if string.match(line, unordered_list_pattern) then
