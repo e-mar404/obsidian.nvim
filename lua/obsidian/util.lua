@@ -90,7 +90,7 @@ end
 ---
 ---@param t table
 ---@return boolean
-util.tbl_contains = function (t, value)
+util.tbl_contains = function(t, value)
   for i = 1, #t do
     if t[i] == value then
       return true
