@@ -122,14 +122,17 @@ M.toggle_checkbox = function(states, line_num)
   local checkboxes = states or { " ", "x" }
 
   if util.is_checkbox(line) then
-    for i, check_char in ipairs(checkboxes) do
-      if string.match(line, "^.* %[" .. vim.pesc(check_char) .. "%].*") then
-        i = i % #checkboxes
-        line = string.gsub(line, vim.pesc("[" .. check_char .. "]"), "[" .. checkboxes[i + 1] .. "]", 1)
-        break
+    if #states == 1 then
+      line = string.gsub(line, "%[.%]", "[" .. checkboxes[1] .. "]", 1)
+    else
+      for i, check_char in ipairs(checkboxes) do
+        if string.match(line, "^.* %[" .. vim.pesc(check_char) .. "%].*") then
+          i = i % #checkboxes
+          line = string.gsub(line, vim.pesc("[" .. check_char .. "]"), "[" .. checkboxes[i + 1] .. "]", 1)
+          break
+        end
       end
     end
-    line = string.gsub(line, "%[.%]", "[" .. checkboxes[1] .. "]", 1)
   elseif Obsidian.opts.checkbox.create_new then
     local unordered_list_pattern = "^(%s*)[-*+] (.*)"
     if string.match(line, unordered_list_pattern) then

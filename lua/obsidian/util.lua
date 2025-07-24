@@ -86,6 +86,19 @@ util.tbl_unique = function(t)
   return vim.tbl_keys(found)
 end
 
+---Check if the table includes a value.
+---
+---@param t table
+---@return boolean
+util.tbl_contains = function (t, value)
+  for i = 1, #t do
+    if t[i] == value then
+      return true
+    end
+  end
+  return false
+end
+
 --------------------
 --- String Tools ---
 --------------------

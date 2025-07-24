@@ -1,17 +1,18 @@
 local toggle_checkbox = require("obsidian.api").toggle_checkbox
-local log = require("obsidian.log")
+local util = require("obsidian.util")
 
 ---@param data CommandArgs
 return function(_, data)
   local start_line, end_line
   local checkboxes
+
   if data.args == "" then
     checkboxes = Obsidian.opts.checkbox.order
-  else
+  elseif util.tbl_contains(Obsidian.opts.checkbox.order, data.args) then
     checkboxes = { data.args }
+  else
+    error("toggle_checkbox: argument passed (" .. data.args .. ") is not part of the list of checkboxes: " .. vim.inspect(Obsidian.opts.checkbox.order))
   end
-
-  log.log("checkboxes: " .. vim.inspect(checkboxes))
 
   start_line = data.line1
   end_line = data.line2
